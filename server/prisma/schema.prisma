@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Customer {
+  id    String  @id @default(uuid())
+  name  String
+  email String  @unique
+  phone String?
+  rides Ride[]
+
+  @@map("customers")
+}
+
+model Driver {
+  id          Int      @id @default(autoincrement())
+  name        String
+  description String
+  vehicle     String
+  ratePerKm   String
+  minKm       Int
+  rides       Ride[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  reviews     Review[]
+
+  @@map("drivers")
+}
+
+model Ride {
+  id          Int      @id @default(autoincrement())
+  origin      String
+  destination String
+  distance    Float
+  duration    String
+  value       Float
+  driverId    Int
+  driver      Driver   @relation(fields: [driverId], references: [id])
+  customerId  String
+  customer    Customer @relation(fields: [customerId], references: [id])
+  date        DateTime @default(now())
+
+  @@map("rides")
+}
+
+model Review {
+  id       Int     @id @default(autoincrement())
+  rating   Int
+  comment  String
+  driver   Driver? @relation(fields: [driverId], references: [id])
+  driverId Int?
+
+  @@map("reviews")
+}
