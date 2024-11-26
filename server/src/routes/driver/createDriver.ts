@@ -15,24 +15,23 @@ export async function createDrive(app: FastifyInstance) {
           description: Z.string()
             .min(10, "A descrição deve ter pelo menos 10 caracteres")
             .max(500, "A descrição pode ter no máximo 500 caracteres"),
-          car: Z.string().min(1, "O nome do carro não pode estar vazio"),
-          rating: Z.string(),           
-          tax: Z.string(),            
+          vehicle: Z.string().min(1, "O nome do carro não pode estar vazio"),
+          ratePerKm: Z.string()
+            .min(1, "A tarifa por km não pode estar vazia"),
           minKm: Z.number()
             .min(1, "A quilometragem mínima deve ser pelo menos 1 km"),
         }),
       },
     },
     async (request) => {
-      const { name, description, car, rating, tax, minKm } = request.body;
+      const { name, description, vehicle, ratePerKm, minKm } = request.body;
 
       const driver = await prisma.driver.create({
         data: {
           name,
           description,
-          car,
-          rating,
-          tax,
+          vehicle,
+          ratePerKm,
           minKm,
         },
       });

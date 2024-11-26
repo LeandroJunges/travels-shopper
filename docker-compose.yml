@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  backend:
+    build:
+      context: ./server
+    container_name: backend
+    ports:
+      - "8080:8080"
+    networks:
+      - mynetwork
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+      - DATABASE_URL=file:./data/database.db
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+    depends_on:
+      - frontend
+
+  frontend:
+    build:
+      context: ./travel
+    container_name: frontend
+    ports:
+      - "80:80"
+    networks:
+      - mynetwork
+    environment:
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    volumes:
+      - ./travel:/app
+      - /app/node_modules
+networks:
+  mynetwork:
+    driver: bridge
