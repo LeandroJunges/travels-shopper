@@ -3,6 +3,7 @@ import axios from 'axios';
 import moment from 'moment';
 import 'moment/locale/pt-br';
 import { useEffect, useState } from 'react';
+import 'dotenv/config'
 
 
 interface Driver {
@@ -32,7 +33,7 @@ interface RideCardProps {
 const RideCard = ({ ride }: RideCardProps) => {
     const [originCity, setOriginCity] = useState('Carregando...')
     const [destinationCity, setDestinationCity] = useState('Carregando...')
-    const GOOGLE_MAPS_API_KEY = 'AIzaSyBPnYBy8kkUBvIcmy27uIg9J3TXygEOsT0'
+    const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_API_KEY
 
 
     const formatDate = (date: string) => {

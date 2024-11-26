@@ -41,7 +41,7 @@ const SelectTravel = () => {
     const [travel, setTravel] = useState<ITravel>()
     const [origin, setOrigin] = useState<string>()
     const [destination, setDestination] = useState<string>()
-    const GOOGLE_MAPS_API_KEY = 'AIzaSyBPnYBy8kkUBvIcmy27uIg9J3TXygEOsT0'
+    const GOOGLE_MAPS_API_KEY = process.env.GOOGLE_API_KEY
     const navigate = useNavigate()
 
     const onSubmit = async (data: IData) => {
