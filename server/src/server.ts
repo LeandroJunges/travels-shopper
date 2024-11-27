@@ -2,7 +2,7 @@ import fastify, { FastifyInstance } from "fastify";
 import cors from '@fastify/cors'
 import { serializerCompiler, validatorCompiler } from "fastify-type-provider-zod";
 
-import { getDrivers } from "./routes/driver/getDrivers";
+import  getDrivers  from "./routes/driver/getDrivers";
 import { travelDriver } from "./routes/travelDriver";
 import { createDrive } from "./routes/driver/createDriver";
 import { getDriverById } from "./routes/driver/getDriverById";
