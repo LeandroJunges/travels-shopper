@@ -19,11 +19,9 @@ COPY src ./src
 
 RUN npx prisma generate 
 
-RUN yarn prisma:seed
-
 RUN yarn build
 
 EXPOSE 8080
 
+CMD ["sh", "-c", "yarn prisma:seed && yarn start"]
 
-CMD ["yarn", "start"]
