@@ -59,15 +59,48 @@ async function main() {
       },
     });
   
-    console.log("Motoristas e avaliações inseridos com sucesso!");
+    const customers = [
+      {
+        name: "Lisa Simpson",
+        email: "lisa.simpson@example.com",
+        phone: "123456789",
+      },
+      {
+        name: "Bruce Wayne",
+        email: "bruce.wayne@example.com",
+        phone: "987654321",
+      },
+      {
+        name: "Tony Stark",
+        email: "tony.stark@example.com",
+        phone: "555123456",
+      },
+      {
+        name: "Diana Prince",
+        email: "diana.prince@example.com",
+        phone: "444555666",
+      },
+      {
+        name: "Clark Kent",
+        email: "clark.kent@example.com",
+        phone: "333444555",
+      },
+    ];
+  
+    for (const customer of customers) {
+      await prisma.customer.create({
+        data: customer,
+      });
+    }
+  
+    console.log("Motoristas, avaliações e clientes inseridos com sucesso!");
   }
   
-
-main()
-  .catch(e => {
-    console.error(e);
-    process.exit(1);
-  })
-  .finally(async () => {
-    await prisma.$disconnect();
-  });
+  main()
+    .catch((e) => {
+      console.error(e);
+      process.exit(1);
+    })
+    .finally(async () => {
+      await prisma.$disconnect();
+    });
