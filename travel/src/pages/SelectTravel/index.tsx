@@ -5,9 +5,10 @@ import Header from '../../components/Header'
 import api from '../../services/api'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import { FaCarRear } from "react-icons/fa6";
 
 interface IData {
-    customerId: string
+    clientID: string
     origem: string
     destino: string
 }
@@ -47,7 +48,7 @@ const SelectTravel = () => {
     const onSubmit = async (data: IData) => {
         
         const formatData = {
-            customerId: data.customerId,
+            customerId: data.clientID,
             origin: data.origem,
             destination: data.destino,
         }
@@ -121,13 +122,13 @@ const SelectTravel = () => {
                     Selecionar Viagem
                 </h1>
                 <Form
-                    fields={['customerId', 'origem', 'destino']}
+                    fields={['clientID', 'origem', 'destino']}
                     onSubmit={onSubmit}
                     textButton="Buscar Motoristas"
                 />
             </div>
             <div>
-                {travel && (
+                {travel ? (
                     <>
                     <div className='w-full'>
                         <h2 className="text-2xl font-bold mb-6 text-center text-blue-800">
@@ -139,7 +140,7 @@ const SelectTravel = () => {
                                 src={generateStaticMapUrl()}
                                 alt="Mapa da viagem"
                                 className="rounded shadow-md" />
-                            <div className="border rounded-lg shadow-md p-6 bg-white flex flex-col space-y-4 transition-transform transform hover:scale-105 hover:shadow-lg duration-300">
+                            <div className="border rounded-lg shadow-md p-4 bg-white flex flex-col space-y-4 transition-transform transform hover:scale-105 hover:shadow-lg duration-300">
                                 <h3 className="text-lg font-bold text-blue-700">Informações</h3>
                                 <p className="text-sm">
                                     <span className="font-semibold">Origem:</span> {origin}
@@ -160,11 +161,11 @@ const SelectTravel = () => {
                         <h2 className="text-2xl font-bold mb-6 text-center text-blue-800">
                             Motoristas para a Viagem
                         </h2>
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {travel.options.map((driver, index) => (
                                 <div
                                     key={index}
-                                    className="border rounded-lg shadow-md p-6 bg-white flex flex-col justify-between transition-transform transform hover:scale-105 hover:shadow-lg "
+                                    className="border rounded-lg shadow-md p-4 bg-white flex flex-col justify-between transition-transform transform hover:scale-95 hover:shadow-lg "
                                 >
                                     <div className="flex flex-col items-center">
                                         <h3 className="text-lg font-bold text-blue-700">
@@ -224,6 +225,13 @@ const SelectTravel = () => {
                     </div>
                     <div className='py-2' ></div>
                     </>
+                ):(
+                    <div className='flex items-center gap-4 ' >
+                        <h2 className='text-2xl font-semibold hover:text-blue-400 hover:shadow-lg ' >
+                            Para onde iremos ? 
+                        </h2>
+                        <FaCarRear size={50} color='#2563eb' className=' hover:bg-blue-200 hover:shadow-lg rounded-md' />
+                    </div>
                 )}
             </div>
         </div>

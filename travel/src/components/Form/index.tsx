@@ -10,7 +10,7 @@ interface FormsProps {
 }
 
 const schema = z.object({
-    customerId: z.string().uuid('Insira um id valido').min(1, 'campo obrigatorio!'),
+    clientID: z.string().min(1, 'campo obrigatorio!'),
     origem: z.string().min(3, 'campo obrigatorio!'),
     destino: z.string().min(3, 'campo obrigatorio!'),
 })

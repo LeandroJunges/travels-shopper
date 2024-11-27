@@ -5,6 +5,7 @@ import Header from "../../components/Header"
 import Footer from "../../components/Footer"
 import api from "../../services/api"
 import RideList from "../../components/RideList"
+import { toast } from "react-toastify"
 
 interface IDriver {
     id: number
@@ -34,13 +35,17 @@ interface IRides {
 
 const Historical = ()=>{
     const [rides, setRides] = useState<IRides>()
+    const [noData, setNoData] = useState(false)
     const location = useLocation()
     const {customerId} = location.state
 
     const loadRides = async (id: string)=>{
-        const {data} = await api.get(`/ride/${id}`)
-        setRides(data)
-        console.log(rides)
+        api.get(`/ride/${id}`).then((res)=>{
+            setRides(res.data)
+        }).catch(()=>{
+            toast.error('Erro ao buscar viagens!')
+            setNoData(true)
+        })
     }
 
 
@@ -52,9 +57,11 @@ const Historical = ()=>{
             <div className="flex flex-col items-center gap-8" >
                 <Header />
                 <h1 className="text-3xl font-bold text-center" >Histórico de Viagens</h1>
-                {rides && rides?.rides?.length > 0 && (
+                {rides && rides?.rides?.length > 0 && noData === false ?  (
                     <RideList rides={rides.rides} />
 
+                ):(
+                    <p className="text-center text-xl" >Nenhuma viagem encontrada.</p>
                 )}
                 <button className="bg-blue-700 text-white py-2 px-4 rounded hover:bg-blue-600 transition" >
                     <Link to="/">Nova Viagem</Link> 
