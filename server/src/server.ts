@@ -44,6 +44,6 @@ app.register(updateCustomer)
 app.register(deleteCustomer)
 
 
-app.listen({port: 8080}).then((port)=>{
+app.listen({host:'0.0.0.0',port: 8080}).then((port)=>{
     console.log(`Server running! ${port}`)
 })

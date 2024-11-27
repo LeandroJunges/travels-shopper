@@ -12,7 +12,7 @@
     "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js",
     "build": "tsc",
-    "prisma:seed": "tsx src/prisma/seed.ts"
+    "prisma:seed": "DATABASE_URL=file:./data/database.db tsx src/seed/seed.ts"
   },
   "keywords": [],
   "author": "",

@@ -11,9 +11,15 @@ COPY package.json yarn.lock ./
 
 RUN yarn install
 
-COPY . .
+COPY tsconfig.* ./
 
-RUN npx prisma generate --schema=prisma/schema.prisma
+COPY prisma ./prisma
+
+COPY src ./src
+
+RUN npx prisma generate 
+
+RUN yarn prisma:seed
 
 RUN yarn build
 
