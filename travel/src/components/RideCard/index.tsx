@@ -45,7 +45,6 @@ const RideCard = ({ ride }: RideCardProps) => {
         try {
             const response = await axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${coordinates}&key=${GOOGLE_MAPS_API_KEY}`)
             const results = response.data.results
-            console.log(response)
             if(results.length > 0){
                 const city = results[0].address_components.find((item: any)=> item.types.includes('sublocality'))
                 return city ? city.long_name : 'Local desconhecido'

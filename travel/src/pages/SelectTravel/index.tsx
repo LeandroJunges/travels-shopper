@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Form from '../../components/Form'
 import Header from '../../components/Header'
 import api from '../../services/api'
@@ -38,14 +38,35 @@ interface ITravel {
     options: IDriver[]
 }
 
+interface ICustomer{
+    id: string
+    name: string
+    email: string
+    phone: string
+}
+
 const SelectTravel = () => {
     const [travel, setTravel] = useState<ITravel>()
     const [origin, setOrigin] = useState<string>()
     const [destination, setDestination] = useState<string>()
+    const [customers, setCustomers] = useState<ICustomer[]>([])
+    const [customerId, setCustomerId] = useState<string | undefined>()
+    const [openOptions, setOpenOptions] = useState<boolean>(false)
     const GOOGLE_MAPS_API_KEY = "AIzaSyBPnYBy8kkUBvIcmy27uIg9J3TXygEOsT0"
     const navigate = useNavigate()
 
+    const loadCustomers = async () =>{
+        api.get('/customer').then((res) => {
+            setCustomers(res.data.data)
+            
+        }).catch((err) => {
+            console.log(err)
+            return toast.error(`Erro ao buscar Clientes! `)
+        })
+    }
+
     const onSubmit = async (data: IData) => {
+        setOpenOptions(false)
         
         const formatData = {
             customerId: data.clientID,
@@ -84,7 +105,6 @@ const SelectTravel = () => {
     
         try {
             const response = await api.patch('/ride/confirm', requestData);
-            console.log(response.data)
             if (response.data.success) {
                 toast.success('Viagem confirmada!')
                 navigate('/historical', {
@@ -113,6 +133,14 @@ const SelectTravel = () => {
 
         return `https://maps.googleapis.com/maps/api/staticmap?size=600x400&path=weight:3|color:blue|${origin}|${destination}&markers=color:green|label:A|${origin}&markers=color:red|label:B|${destination}&key=${GOOGLE_MAPS_API_KEY}`
     }
+    const addCustomer = (id: string)=>{
+        setCustomerId(id)
+        
+    }
+
+    useEffect(() => {
+        loadCustomers()
+    }, [])
 
     return (
         <div className="flex flex-col justify-between space-y-28">
@@ -125,8 +153,23 @@ const SelectTravel = () => {
                     fields={['clientID', 'origem', 'destino']}
                     onSubmit={onSubmit}
                     textButton="Buscar Motoristas"
+                    clientID={customerId}
                 />
+                <div className='flex flex-col items-center mt-2 gap-2 ' >
+                <h2 onClick={()=> setOpenOptions(!openOptions)} className='font-semibold text-base hover:cursor-pointer hover:text-blue-500 ' >Não lembra seu id ? Clique aqui!</h2>
+                {openOptions && (
+                     <select className='w-[25%] p-2 rounded-lg bg-white border ' onChange={(e)=> addCustomer(e.target.value) } >
+                     {customers.map((customer) =>(
+                         <option key={customer.id} value={customer.id}  >{customer.name}</option>
+                     ))}
+     
+                     </select>
+                )}
+               
             </div>
+            </div>
+            
+            
             <div>
                 {travel ? (
                     <>

@@ -7,6 +7,7 @@ interface FormsProps {
     fields: string[]
     onSubmit: (data: any)=> void
     textButton: string
+    clientID?: string
 }
 
 const schema = z.object({
@@ -16,10 +17,17 @@ const schema = z.object({
 })
 type FormData = z.infer<typeof schema>
 
-const Form = ({fields, onSubmit, textButton}: FormsProps)=>{
-   const {register, handleSubmit, formState: {errors} } = useForm<FormData>({
-        resolver: zodResolver(schema)
+const Form = ({fields, onSubmit, textButton, clientID}: FormsProps)=>{
+   const {register, handleSubmit, formState: {errors}, setValue } = useForm<FormData>({
+        resolver: zodResolver(schema),
+        defaultValues:{
+            clientID: clientID || '' ,
+        }
    })
+
+   if (clientID) {
+    setValue('clientID', clientID)
+  }
 
    const handleFormSubmit: SubmitHandler<FormData> =(data)=>{
     if(data){
