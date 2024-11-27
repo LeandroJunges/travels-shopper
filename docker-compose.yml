@@ -22,7 +22,7 @@ services:
       context: ./travel
     container_name: frontend
     ports:
-      - "80:80"
+      - "80:4173"
     networks:
       - mynetwork
     environment:

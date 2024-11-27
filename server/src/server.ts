@@ -44,6 +44,6 @@ app.register(updateCustomer)
 app.register(deleteCustomer)
 
 
-app.listen({port: 3333}).then(()=>{
-    console.log('Server running!')
+app.listen({port: 8080}).then((port)=>{
+    console.log(`Server running! ${port}`)
 })

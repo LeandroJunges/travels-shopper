@@ -77,7 +77,7 @@ export async function travelDriver(app: FastifyInstance) {
                     error_description: `Erro ao calcular rota, verifique os campos!`
                 })
             }
-
+            console.log("AQUII CHAMOU!!!")
             const leg = routeData.routes[0].legs[0]
             const distanceInKm = leg.distance.value / 1000
             const duration = leg.duration.text

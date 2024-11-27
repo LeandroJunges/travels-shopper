@@ -20,4 +20,4 @@ RUN yarn build
 EXPOSE 80
 
 
-CMD ["yarn", "preview"]
+CMD ["yarn", "preview", "--host"]
