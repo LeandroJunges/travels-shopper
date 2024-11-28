@@ -256,7 +256,10 @@ const SelectTravel = () => {
 
                                     <div className="mt-4 flex justify-between items-center gap-4 ">
                                         <p className="text-lg font-bold text-green-600">
-                                            R$ {driver.value.toFixed(2)}
+                                        {new Intl.NumberFormat('pt-BR', {
+                                            style: 'currency',
+                                            currency: 'BRL'
+                                        }).format(driver.value)}
                                         </p>
                                         <button onClick={() => chooseDriveTravel(driver)} className="bg-blue-700 text-white py-2 px-4 rounded hover:bg-blue-600 transition">
                                             Escolher
